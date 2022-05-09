@@ -2,6 +2,7 @@
   "name": "egg-react-admin",
   "description": "基于Eggjs和React的后台管理系统",
   "version": "0.0.1",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "install:admin": "cd ./admin && yarn",
