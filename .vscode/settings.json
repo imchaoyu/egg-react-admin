@@ -1,0 +1,16 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": false
+
+  },
+  "eslint.workingDirectories": [
+  "E:\\_mycode\\egg-react-admin\\admin"
+  ],
+  "eslint.validate": [
+    "javascript", "javascriptreact"
+  ],
+  "eslint.options": {
+    "configFile": "E:\\_mycode\\egg-react-admin\\admin\\.eslintrc.js"
+  }
+}

@@ -7,6 +7,13 @@
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:prettier": "prettier -c --write \"src/**/*\" --end-of-line auto",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "lint-staged": "lint-staged",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
@@ -33,17 +40,24 @@
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@umijs/fabric": "^2.10.2",
     "@umijs/preset-react": "^1.8.0",
     "@umijs/test": "^3.5.23",
     "cross-env": "^7.0.3",
-    "eslint": "^8.15.0",
+    "eslint": "^7.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
-    "lint-staged": "^14.4.0",
+    "lint-staged": "^12.4.0",
     "prettier": "^2.6.0",
     "stylelint": "^14.8.2",
     "yorkie": "^2.0.0"
   },
   "engines": {
     "node": ">=12.0.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
 }
