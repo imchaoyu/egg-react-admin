@@ -1,0 +1,22 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true,
+  },
+  "eslint.workingDirectories": [
+    "./admin",
+    "./service"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "eslint.options": {
+    "extensions": [
+      ".js",
+      ".jsx",
+      ".tsx"
+    ]
+  },
+}
