@@ -10,6 +10,7 @@ export const initialStateConfig = {
   loading: <PageLoading />,
 };
 
+// 初始全局数据
 export async function getInitialState() {
   const fetchUserInfo = async () => {
     try {
@@ -33,6 +34,35 @@ export async function getInitialState() {
     settings: {},
   };
 }
+
+// 统一错误处理
+const errorHandler = (err) => {
+  console.log(err);
+  // const codeMaps = {
+  //   502: '网关错误。',
+  //   503: '服务不可用，服务器暂时过载或维护。',
+  //   504: '网关超时。',
+  // };
+};
+// 响应前拦截
+const authHeaderInterceptor = (url, options) => {
+  const authHeader = { Authorization: 'Bearer xxxxxx' };
+  return {
+    url: `${url}`,
+    options: { ...options, interceptors: true, headers: authHeader },
+  };
+};
+// 响应后拦截
+const responseInterceptors = (response) => {
+  // response.headers.append('cy', 'yes yo');
+  return response;
+};
+// request请求拦截
+export const request = {
+  errorHandler,
+  requestInterceptors: [authHeaderInterceptor],
+  responseInterceptors: [responseInterceptors],
+};
 
 export const layout = ({ initialState }) => {
   return {
