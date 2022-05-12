@@ -12,7 +12,6 @@ export default defineConfig({
   },
   layout: {
     locale: false,
-    siderWidth: 208,
     ...defaultSettings,
   },
   locale: {

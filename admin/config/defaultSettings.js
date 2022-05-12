@@ -1,10 +1,11 @@
 const Settings = {
   navTheme: 'light',
+  siderWidth: 180,
   // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'mix',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
   title: '后台管理',
