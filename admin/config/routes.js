@@ -27,7 +27,7 @@ export default [
   {
     path: '/system',
     name: '系统管理',
-    icon: 'smile',
+    icon: 'icon-sysSettings',
     component: '@/pages/system',
   },
   {
