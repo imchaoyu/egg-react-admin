@@ -17,22 +17,13 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
-      "prettier --write"
-    ]
-  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-layout": "^6.38.0",
     "@umijs/route-utils": "^2.0.5",
     "ahooks": "^3.3.10",
     "antd": "^4.20.2",
+    "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
