@@ -73,7 +73,7 @@ const AvatarDropdown = ({ menu }) => {
     <Menu items={menuItems} className={styles.menu} selectedKeys={[]} onClick={onMenuClick} />
   );
   return (
-    <HeaderDropdown overlay={menuHeaderDropdown} arrow>
+    <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
         <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
         <span className={`${styles.name} anticon`}>{currentUser.name}</span>

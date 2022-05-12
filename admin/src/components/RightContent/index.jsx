@@ -5,10 +5,12 @@
  */
 import { Space } from 'antd';
 import Avatar from './AvatarDropdown';
+import styles from './style.less';
 
 const RightContent = () => {
+  let className = styles.right;
   return (
-    <Space>
+    <Space className={className}>
       <Avatar menu />
     </Space>
   );
