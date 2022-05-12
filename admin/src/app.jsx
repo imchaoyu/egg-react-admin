@@ -1,6 +1,7 @@
 import { history, Link } from 'umi';
 import { PageLoading } from '@ant-design/pro-layout';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import RightContent from './components/RightContent';
 import { currentUser as queryCurrentUser } from './services/account';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -66,7 +67,7 @@ export const request = {
 
 export const layout = ({ initialState }) => {
   return {
-    rightContentRender: () => <>右侧</>,
+    rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
       content: initialState?.currentUser?.name,
