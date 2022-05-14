@@ -68,6 +68,8 @@ export const request = {
 export const layout = ({ initialState }) => {
   return {
     rightContentRender: () => <RightContent />,
+    onError: () => console.log('error'),
+    ErrorComponent: () => <div>错了</div>,
     disableContentMargin: false,
     waterMarkProps: {
       content: initialState?.currentUser?.name,

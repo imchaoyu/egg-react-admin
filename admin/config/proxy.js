@@ -1,7 +1,7 @@
 /**
  * 代理
  */
- export default {
+export default {
   dev: {
     '/api/': {
       target: 'https://preview.pro.ant.design',
