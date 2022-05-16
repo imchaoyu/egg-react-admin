@@ -1,7 +1,7 @@
-const system = () => {
+const system = (props) => {
   return (
     <div>
-      <h1>system</h1>
+      <h1>{props.route.name}</h1>
     </div>
   );
 };

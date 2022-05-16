@@ -11,6 +11,6 @@ const Settings = {
   title: '后台管理',
   pwa: false,
   logo: '',
-  iconfontUrl: '//at.alicdn.com/t/font_3396634_q9xece4dx6a.js',
+  iconfontUrl: '//at.alicdn.com/t/font_3396634_l69enu216lh.js',
 };
 export default Settings;
