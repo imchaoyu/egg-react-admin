@@ -25,38 +25,52 @@ export default [
     component: '@/pages/dashboard',
   },
   {
-    name: '栏目管理',
-    icon: 'icon-menus',
-    path: '/menus',
-    component: '@/pages/menus',
-  },
-  {
-    name: '内容管理',
-    icon: 'icon-article',
-    path: '/article',
-    component: '@/pages/articles',
-  },
-  {
-    name: '会员管理',
-    icon: 'icon-users',
-    path: '/members',
-    component: '@/pages/member',
-  },
-  {
-    name: '评论管理',
-    icon: 'icon-comment',
-    path: '/files',
-    component: '@/pages/files',
+    name: '网站设置',
+    icon: 'DesktopOutlined',
+    path: '/web',
+    routes: [
+      {
+        path: '/web',
+        redirect: '/web/menus',
+      },
+      {
+        name: '栏目管理',
+        icon: 'BarsOutlined',
+        path: '/web/menus',
+        component: '@/pages/menus',
+      },
+      {
+        name: '内容管理',
+        icon: 'ReadOutlined',
+        path: '/web/article',
+        component: '@/pages/articles',
+      },
+      {
+        name: '会员管理',
+        icon: 'TeamOutlined',
+        path: '/web/members',
+        component: '@/pages/member',
+      },
+      {
+        name: '评论管理',
+        icon: 'CommentOutlined',
+        path: '/web/files',
+        component: '@/pages/files',
+      },
+    ],
   },
   {
     name: '常规配置',
-    icon: 'icon-base',
+    icon: 'DatabaseOutlined',
     path: '/settings',
-    // component: '@/pages/settings',
     routes: [
       {
+        path: '/settings',
+        redirect: '/settings/area',
+      },
+      {
         name: '地区管理',
-        icon: 'icon-menu-dot',
+        icon: 'icon-area',
         path: '/settings/area',
         component: '@/pages/settings',
       },
@@ -73,13 +87,13 @@ export default [
       },
       {
         name: '基础配置',
-        icon: 'icon-menu-dot',
+        icon: 'ControlOutlined',
         path: '/system/settings',
         component: '@/pages/system',
       },
       {
         name: '角色权限',
-        icon: 'icon-menu-dot',
+        icon: 'SolutionOutlined',
         path: '/system/role',
         component: '@/pages/system',
       },
@@ -87,7 +101,7 @@ export default [
   },
   {
     name: '系统日志',
-    icon: 'icon-logs',
+    icon: 'FieldTimeOutlined',
     path: '/logs',
     routes: [
       {
@@ -96,13 +110,13 @@ export default [
       },
       {
         name: '登录日志',
-        icon: 'icon-menu-dot',
+        icon: 'LoginOutlined',
         path: '/logs/aboutlogin',
         component: '@/pages/logs',
       },
       {
         name: '错误日志',
-        icon: 'icon-menu-dot',
+        icon: 'BugOutlined',
         path: '/logs/abouterror',
         component: '@/pages/logs',
       },
