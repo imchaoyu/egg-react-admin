@@ -5,7 +5,7 @@
  * create_date: 2022-05-16 11:46:34
  */
 
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -14,6 +14,8 @@ import columns from './column';
 import { getMenus, updateMenus } from '@/services/web';
 
 const Menus = () => {
+  const [formVisible, setFormVisible] = useState(false);
+  // 状态
   const onToggleStatus = async (record) => {
     if (record.status === 1) {
       record.status = 0;
@@ -25,7 +27,7 @@ const Menus = () => {
     console.log(record);
   };
   //
-  const onSubmitNewMenus = (value) => {
+  const onSubmitNewMenus = async (value) => {
     console.log(value);
   };
   // 操作栏
@@ -59,7 +61,7 @@ const Menus = () => {
         }}
         search={false}
         toolBarRender={() => [
-          <Button type="primary" key="primary">
+          <Button type="primary" key="primary" onClick={() => setFormVisible(true)}>
             创建栏目
           </Button>,
         ]}
@@ -68,8 +70,9 @@ const Menus = () => {
       <ModalForm
         title="新增栏目"
         width="400px"
-        visible={false}
         layout="horizontal"
+        visible={formVisible}
+        onVisibleChange={setFormVisible}
         onFinish={onSubmitNewMenus}
       >
         <ProFormText width="md" label="名称" name="name" placeholder="请输入栏目名称" />
