@@ -75,28 +75,28 @@ const Menus = () => {
         onVisibleChange={setFormVisible}
         onFinish={onSubmitNewMenus}
       >
-        <ProFormText width="md" label="名称" name="name" placeholder="请输入栏目名称" />
+        <ProFormText
+          width="md"
+          label="名称"
+          name="name"
+          placeholder="请输入栏目名称"
+          rules={[{ required: true, message: '请输入栏目名称' }]}
+        />
         <ProFormText
           width="md"
           label="链接"
           name="link"
           tooltip="浏览器中url的地址,请以'/'开头"
           placeholder="请输入栏目链接"
+          rules={[{ required: true, message: '请输入栏目链接' }]}
         />
         <ProFormSelect
-          options={[
-            {
-              value: 'close',
-              label: '关闭',
-            },
-            {
-              value: 'open',
-              label: '开启',
-            },
-          ]}
-          defaultValue="close"
+          valueEnum={{
+            close: '关闭',
+            open: '开启',
+          }}
+          value="close"
           width="xs"
-          cacheForSwr
           name="status"
           label="状态"
           rules={[{ required: true, message: '请选择状态' }]}

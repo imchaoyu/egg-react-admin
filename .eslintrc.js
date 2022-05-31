@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
+    strict: ['off', 'global'],
     'prettier/prettier': 'error',
     'no-unused-vars': 'error',
     'space-before-function-paren': 'off',
