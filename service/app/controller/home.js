@@ -1,11 +1,11 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('./BaseController');
 
 class HomeController extends Controller {
   async index() {
-    const { ctx } = this;
-    ctx.body = 'hi, egg';
+    // const { ctx } = this;
+    this.success();
   }
 }
 
