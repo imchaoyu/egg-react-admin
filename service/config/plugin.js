@@ -2,8 +2,16 @@
 
 /** @type Egg.EggPlugin */
 module.exports = {
-  // had enabled by egg
-  // static: {
+  // sequelize: {
   //   enable: true,
-  // }
+  //   package: 'egg-sequelize',
+  // },
+  routerPlus: {
+    enable: true,
+    package: 'egg-router-plus',
+  },
+  validate: {
+    enable: true,
+    package: 'egg-validate',
+  },
 };
