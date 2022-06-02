@@ -8,7 +8,7 @@ module.exports = (app) => {
   // 前缀设置 ex: /api/v1/example
   const apiRouter = router.namespace(`/api/${prefix}`);
   // 通用类api
-  apiRouter.get('/', controller.home.index);
+  apiRouter.post('/', controller.home.index);
   // 后台api
   require('./routes/admin')(app, prefix);
   // web端api
