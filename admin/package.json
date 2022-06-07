@@ -5,6 +5,7 @@
   "scripts": {
     "start": "umi dev",
     "build": "umi build",
+    "dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
@@ -27,6 +28,7 @@
     "antd": "^4.20.2",
     "classnames": "^2.3.1",
     "dayjs": "^1.11.2",
+    "jsencrypt": "^3.2.1",
     "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",

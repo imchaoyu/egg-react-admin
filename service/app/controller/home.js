@@ -19,6 +19,28 @@ class HomeController extends Controller {
     console.log('de: ', de);
     this.success();
   }
+  /**
+   * 获取公钥
+   */
+  async getPubicKey() {
+    const { ctx } = this;
+    try {
+      const str = await ctx.helper.getPublicKey();
+      this.success({ data: str });
+    } catch (err) {
+      this.fail(err);
+    }
+  }
+  async decodeDemo() {
+    const { ctx } = this;
+    const p = ctx.params();
+    try {
+      const res = await ctx.helper.decrypt(p.data);
+      this.success({ data: res });
+    } catch (err) {
+      ctx.throw(err);
+    }
+  }
 }
 
 module.exports = HomeController;

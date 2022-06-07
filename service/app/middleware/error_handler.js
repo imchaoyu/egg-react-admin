@@ -18,7 +18,7 @@ module.exports = () => {
         errCode: status,
         msg,
       };
-      ctx.status = 200;
+      ctx.status = status;
     }
   };
 };

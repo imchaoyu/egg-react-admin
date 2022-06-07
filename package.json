@@ -6,7 +6,8 @@
   "scripts": {
     "install:admin": "cd ./admin && yarn",
     "install:service": "cd ./service && yarn",
-    "dev:admin": "cd ./admin && yarn start",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:admin": "cd ./admin && yarn dev",
     "dev:service": "cd ./service && yarn dev",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",

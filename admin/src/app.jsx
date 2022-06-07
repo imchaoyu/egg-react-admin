@@ -1,4 +1,5 @@
 import { history, Link } from 'umi';
+import { notification } from 'antd';
 import { PageLoading } from '@ant-design/pro-layout';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import RightContent from './components/RightContent';
@@ -36,21 +37,64 @@ export async function getInitialState() {
   };
 }
 
-// 统一错误处理
-const errorHandler = (err) => {
-  console.log(err);
-  // const codeMaps = {
-  //   502: '网关错误。',
-  //   503: '服务不可用，服务器暂时过载或维护。',
-  //   504: '网关超时。',
-  // };
+// const authHeader = async (url, options) => {
+//   console.log(`%c${options.url}:  ${options.method}`, 'color:blue', '-----请求参数', options.data);
+//   // 传输数据加密
+//   const encode = options.data && (await AESEncrypt(options.data));
+//   const openid = (await getSession('openid', false)) || '';
+//   // 头信息修改
+//   const config = {
+//     data: encode || null,
+//     timeout: 5000,
+//     headers: {
+//       Accept: 'text/html',
+//       'Content-Type': 'text/html; charset=utf-8',
+//       'x-sys-openid': openid,
+//     },
+//   };
+//   return {
+//     url,
+//     options: { ...options, ...config },
+//   };
+// };
+// 请求错误处理
+const errorHandler = (error) => {
+  console.log('error: ', error);
+  const { response } = error;
+  if (response && response.status) {
+    const { errCode, msg } = response;
+    const errorText = msg || response.statusText || codeMessage[errCode];
+    notification.error({
+      message: errorText,
+      description: '',
+      duration: 20,
+      key: 2,
+    });
+  }
+  if (!response) {
+    notification.error({
+      description: '网络发生异常，无法连接服务器',
+      message: '网络异常',
+    });
+  }
+
+  throw error;
+  // return response;
 };
 // 响应前拦截
 const authHeaderInterceptor = (url, options) => {
-  const authHeader = { Authorization: 'Bearer xxxxxx' };
+  // const authHeader = { Authorization: 'Bearer xxxxxx' };
+  const config = {
+    timeout: 5000,
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'x-sys-openid': '111',
+    },
+  };
   return {
-    url: `${url}`,
-    options: { ...options, interceptors: true, headers: authHeader },
+    url,
+    options: { ...options, ...config },
   };
 };
 // 响应后拦截
@@ -60,9 +104,12 @@ const responseInterceptors = (response) => {
 };
 // request请求拦截
 export const request = {
+  prefix: '/api/v1',
   errorHandler,
   requestInterceptors: [authHeaderInterceptor],
   responseInterceptors: [responseInterceptors],
+  // requestInterceptors: [authHeader],
+  // responseInterceptors: [code2data],
 };
 
 export const layout = ({ initialState }) => {
