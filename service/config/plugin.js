@@ -2,10 +2,14 @@
 
 /** @type Egg.EggPlugin */
 module.exports = {
-  // sequelize: {
-  //   enable: true,
-  //   package: 'egg-sequelize',
-  // },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize',
+  },
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
   cors: {
     enable: true,
     package: 'egg-cors',

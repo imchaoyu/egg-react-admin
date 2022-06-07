@@ -1,5 +1,7 @@
 'use strict';
 
+const { USERNAME, PASSWORD, DATABASE, HOST, PORT } = require('./config.settings');
+
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -26,16 +28,70 @@ module.exports = (appInfo) => {
     enable: true,
     ignore: ['/api/v1/admin/user/login', '/api/v1/admin/user/logout', '/api/v1/admin/user/captcha'],
   };
+  // Session的默认配置
+  config.session = {
+    key: 'openid',
+    maxAge: 1000 * 3600 * 2, // 2h
+    httpOnly: true,
+    encrypt: true,
+    renew: true, // 延长会话有效期
+  };
+  // mysql配置
+  config.sequelize = {
+    dialect: 'mysql',
+    dialectOptions: {
+      charset: 'utf8mb4',
+      dateStrings: true, // 让读取date类型数据时返回字符串而不是UTC时间
+      typeCast(field, next) {
+        if (field.type === 'DATETIME') {
+          return field.string();
+        }
+        return next();
+      },
+    },
+    host: HOST,
+    port: PORT,
+    database: DATABASE,
+    username: USERNAME,
+    password: PASSWORD,
+    define: {
+      timestamps: true, // 添加create,update,delete时间戳
+      paranoid: true, // 添加软删除
+      freezeTableName: true, // 防止修改表名为复数
+      underscored: false, // 防止驼峰式字段被默认转为下划线
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      deletedAt: 'deleted_at',
+    },
+    timezone: '+08:00',
+  };
 
   // 配置安全验证
   config.security = {
     csrf: {
-      useSession: true, // 默认为 false，当设置为 true 时，将会把 csrf token 保存到 Session 中
-      cookieName: 'csrfToken', // Cookie 中的字段名，默认为 csrfToken
-      sessionName: 'csrfToken', // Session 中的字段名，默认为 csrfToken
+      enable: false,
+      ignoreJSON: true,
     },
-    // 将域名加入白名单
-    domainWhiteList: ['http://localhost:8080', 'http://localhost:7001'],
+    // 允许访问接口的白名单
+    domainWhiteList: ['*'], // ['http://localhost:8080']
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET, HEAD, PUT, POST, DELETE, PATCH',
+  };
+  // 错误配置
+  config.onerror = {
+    async all(err, ctx) {
+      // 在此处定义针对所有响应类型的错误处理方法
+      // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
+      ctx.body = { errCode: 10001, msg: '系统出现错误！' };
+      ctx.status = 500;
+    },
+  };
+  // 配置参数校验器，基于parameter
+  config.validate = {
+    convert: true, // 对参数可以使用convertType规则进行类型转换
+    // validateRoot: false,   // 限制被验证值必须是一个对象。
   };
   // add your user config here
   const userConfig = {
