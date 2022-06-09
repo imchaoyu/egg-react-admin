@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button, message } from 'antd';
-// import JSEncrypt from 'jsencrypt';
 import { getPublicKey, demo, login } from '@/services/login';
 import { Encrypt, setSession } from '@/utils';
 
@@ -34,7 +33,7 @@ const Login = () => {
       console.log('encrypted: ', encrypted);
       if (!encrypted) {
         message.error('数据加密出错');
-        // return false;
+        return false;
       }
       setEncode("{ name: 'chaoyu', age: 100 }");
       const res = await demo({ data: { name: 'chaoyu', age: 100 } });

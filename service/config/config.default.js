@@ -87,10 +87,11 @@ module.exports = (appInfo) => {
   // 错误配置
   config.onerror = {
     async all(err, ctx) {
+      console.log('err: ', err);
       // 在此处定义针对所有响应类型的错误处理方法
       // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
-      ctx.body = { errCode: 10001, msg: '系统出现错误！' };
-      ctx.status = 500;
+      ctx.body = { errCode: 10001, msg: err?.message ?? '系统出现错误！' };
+      ctx.status = 200;
     },
   };
   // 配置参数校验器，基于parameter

@@ -15,7 +15,7 @@ export const Encrypt = async (data) => {
   try {
     const public_key = await getSession('public_key');
     if (!public_key) {
-      // throw new Error('public key is not find!');
+      throw new Error('public key is not find!');
     }
     const dataStr = JSON.stringify(data);
     const encrypt = new JSEncrypt();

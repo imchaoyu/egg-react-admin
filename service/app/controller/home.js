@@ -32,8 +32,8 @@ class HomeController extends Controller {
     }
   }
   async decodeDemo() {
+    const { ctx } = this;
     try {
-      const { ctx } = this;
       const p = ctx.params();
       const res = await ctx.helper.decrypt(p.data);
       this.success({ data: res });

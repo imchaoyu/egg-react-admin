@@ -28,7 +28,7 @@ module.exports = {
     const private_key = new NodeRSA(RSA_PRIVATE_DATA, { encryptionScheme: 'pkcs1' });
     // 解密
     const deStr = private_key.decrypt(data, 'utf8');
-    return JSON.parse(deStr);
+    return deStr && JSON.parse(deStr);
   },
   async getPublicKey() {
     const { RSA_PUBLIC_DATA } = this.app.config;

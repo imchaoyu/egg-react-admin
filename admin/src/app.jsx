@@ -1,5 +1,4 @@
 import { history, Link } from 'umi';
-import { notification } from 'antd';
 import { PageLoading } from '@ant-design/pro-layout';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import RightContent from './components/RightContent';
@@ -38,62 +37,50 @@ export async function getInitialState() {
   };
 }
 
-// const authHeader = async (url, options) => {
-//   console.log(`%c${options.url}:  ${options.method}`, 'color:blue', '-----请求参数', options.data);
-//   // 传输数据加密
-//   const encode = options.data && (await AESEncrypt(options.data));
-//   const openid = (await getSession('openid', false)) || '';
-//   // 头信息修改
-//   const config = {
-//     data: encode || null,
-//     timeout: 5000,
-//     headers: {
-//       Accept: 'text/html',
-//       'Content-Type': 'text/html; charset=utf-8',
-//       'x-sys-openid': openid,
-//     },
-//   };
-//   return {
-//     url,
-//     options: { ...options, ...config },
-//   };
-// };
-// 请求错误处理
-const errorHandler = (error) => {
-  console.log('error: ', error);
-  const { response } = error;
-  console.log('response: ', response);
-  if (response && response.status) {
-    const { errCode, msg } = response;
-    console.log('errCode: ', errCode);
-    const errorText = msg || response.statusText || codeMessage[errCode];
-    notification.error({
-      message: errorText,
-      description: '',
-      duration: 20,
-      key: 2,
-    });
+/**
+ * 响应体格式转换器
+ * @param {Object} resData 请求返回的数据
+ * @param {Object} ctx 请求信息，包含cache，req，res，responseInterceptors等
+ * @returns 修改后的响应数据格式
+ */
+const errorConfigAdaptor = (resData, ctx) => {
+  if (resData?.errorCode) {
+    const res = {
+      url: ctx.req.url,
+      success: resData.errorCode === 200,
+      showType: resData?.showType ?? 4,
+      ...resData,
+    };
+    return res;
   }
-  if (!response) {
-    notification.error({
-      description: '网络发生异常，无法连接服务器',
-      message: '网络异常',
-    });
-  }
-
-  throw error;
-  // return response;
+  return resData;
 };
-// 响应前拦截
-const authHeaderInterceptor = async (url, options) => {
-  // const authHeader = { Authorization: 'Bearer xxxxxx' };
-  const openid = (await getSession('openid', false)) || '';
+/**
+ * 响应前拦截，添加token头信息
+ * @param {String} url 请求地址
+ * @param {Object} options 请求信息
+ * @returns 请求信息
+ */
+const authHeader = async (url, options) => {
+  console.log(
+    `%c${options.url}:  ${options.method}`,
+    'color:yellow',
+    '-----请求参数',
+    options.data,
+  );
+  // 传输数据加密
+  // const encode = options.data && (await AESEncrypt(options.data));
+  const sessionid = (await getSession('openid', false)) || '';
+  // 头信息修改
   const config = {
+    // data: encode || null,
     timeout: 5000,
     headers: {
+      // Accept: 'text/html',
+      // 'Content-Type': 'text/html; charset=utf-8',
       Accept: '*/*',
       'Content-Type': 'application/json;charset=UTF-8',
-      'x-sys-sessionid': openid,
+      'x-sys-sessionid': sessionid,
     },
   };
   return {
@@ -109,17 +96,17 @@ const responseInterceptors = (response) => {
 // request请求拦截
 export const request = {
   prefix: '/api/v1',
-  errorHandler,
-  requestInterceptors: [authHeaderInterceptor],
+  requestInterceptors: [authHeader],
   responseInterceptors: [responseInterceptors],
-  // requestInterceptors: [authHeader],
-  // responseInterceptors: [code2data],
+  errorConfig: {
+    adaptor: errorConfigAdaptor,
+  },
 };
 
 export const layout = ({ initialState }) => {
   return {
     rightContentRender: () => <RightContent />,
-    onError: () => console.log('error'),
+    onError: () => console.log('layout error tips!'),
     ErrorComponent: () => <div>错了</div>,
     disableContentMargin: false,
     waterMarkProps: {
