@@ -22,11 +22,16 @@ module.exports = (appInfo) => {
     },
   };
   // 中间件
-  config.middleware = ['notFound', 'errorHandler'];
+  config.middleware = ['notFound', 'errorHandler', 'auth'];
   // auth过滤
   config.auth = {
     enable: true,
-    ignore: ['/api/v1/admin/user/login', '/api/v1/admin/user/logout', '/api/v1/admin/user/captcha'],
+    ignore: [
+      '/api/v1/key',
+      '/api/v1/login',
+      '/api/v1/admin/user/logout',
+      '/api/v1/admin/user/captcha',
+    ],
   };
   // Session的默认配置
   config.session = {

@@ -6,9 +6,13 @@ class BaseController extends Controller {
   async success({ data = null, msg = '操作成功' } = {}) {
     const { ctx } = this;
     ctx.body = {
-      errCode: 200,
-      msg,
+      success: true,
       data,
+      errorCode: 200,
+      errorMessage: msg,
+      showType: 0, // 0 silent; 1 message.warn; 2 message.error; 4 notification; 9 page
+      traceId: '', // Convenient for back-end Troubleshooting: unique request ID
+      host: '', // Convenient for backend Troubleshooting: host of current access server
     };
     ctx.status = 200;
   }

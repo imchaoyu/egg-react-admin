@@ -10,6 +10,7 @@ module.exports = (app) => {
   // 通用类api
   apiRouter.post('/', controller.home.index);
   apiRouter.get('/key', controller.home.getPubicKey);
+  apiRouter.post('/login', controller.user.login);
   apiRouter.post('/decodeDemo', controller.home.decodeDemo);
   // 后台api
   require('./routes/admin')(app, prefix);

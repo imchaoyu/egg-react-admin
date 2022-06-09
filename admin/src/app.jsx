@@ -4,6 +4,7 @@ import { PageLoading } from '@ant-design/pro-layout';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import RightContent from './components/RightContent';
 import { currentUser as queryCurrentUser } from './services/account';
+import { getSession } from '@/utils';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
@@ -61,8 +62,10 @@ export async function getInitialState() {
 const errorHandler = (error) => {
   console.log('error: ', error);
   const { response } = error;
+  console.log('response: ', response);
   if (response && response.status) {
     const { errCode, msg } = response;
+    console.log('errCode: ', errCode);
     const errorText = msg || response.statusText || codeMessage[errCode];
     notification.error({
       message: errorText,
@@ -82,14 +85,15 @@ const errorHandler = (error) => {
   // return response;
 };
 // 响应前拦截
-const authHeaderInterceptor = (url, options) => {
+const authHeaderInterceptor = async (url, options) => {
   // const authHeader = { Authorization: 'Bearer xxxxxx' };
+  const openid = (await getSession('openid', false)) || '';
   const config = {
     timeout: 5000,
     headers: {
       Accept: '*/*',
       'Content-Type': 'application/json;charset=UTF-8',
-      'x-sys-openid': '111',
+      'x-sys-sessionid': openid,
     },
   };
   return {

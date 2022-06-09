@@ -32,13 +32,14 @@ class HomeController extends Controller {
     }
   }
   async decodeDemo() {
-    const { ctx } = this;
-    const p = ctx.params();
     try {
+      const { ctx } = this;
+      const p = ctx.params();
       const res = await ctx.helper.decrypt(p.data);
       this.success({ data: res });
     } catch (err) {
-      ctx.throw(err);
+      console.log('err========', err);
+      ctx.throw(500, err);
     }
   }
 }
