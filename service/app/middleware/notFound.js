@@ -5,8 +5,9 @@ module.exports = () => {
     await next();
     if (ctx.status === 404 && !ctx.body) {
       ctx.body = {
-        errCode: 404,
-        msg: '未发现资源！',
+        errorCode: 404,
+        errorMessage: '未发现资源！',
+        showType: 2,
       };
       ctx.status = 404;
     }
