@@ -9,9 +9,10 @@ module.exports = {
    * @returns
    */
   async encrypt(data) {
-    const { RSA_PUBLIC_DATA } = this.app.config;
+    const { service_rsa } = this.app.config;
+    const { SERVICE_PUBLIC_DATA } = service_rsa;
     // 生成公钥对象
-    const public_key = new NodeRSA(RSA_PUBLIC_DATA, { encryptionScheme: 'pkcs1' });
+    const public_key = new NodeRSA(SERVICE_PUBLIC_DATA, { encryptionScheme: 'pkcs1' });
     // 格式化原始数据
     const str = JSON.stringify(data);
     // 返回加密内容
@@ -23,18 +24,20 @@ module.exports = {
    * @returns
    */
   async decrypt(data) {
-    const { RSA_PRIVATE_DATA } = this.app.config;
+    const { service_rsa } = this.app.config;
+    const { SERVICE_PRIVATE_DATA } = service_rsa;
     // 生成私钥对象
-    const private_key = new NodeRSA(RSA_PRIVATE_DATA, { encryptionScheme: 'pkcs1' });
+    const private_key = new NodeRSA(SERVICE_PRIVATE_DATA, { encryptionScheme: 'pkcs1' });
     // 解密
     const deStr = private_key.decrypt(data, 'utf8');
     return deStr && JSON.parse(deStr);
   },
   async getPublicKey() {
-    const { RSA_PUBLIC_DATA } = this.app.config;
+    const { service_rsa } = this.app.config;
+    const { SERVICE_PUBLIC_DATA } = service_rsa;
     // 生成公钥对象
-    // const public_key = new NodeRSA(RSA_PUBLIC_DATA);
+    // const public_key = new NodeRSA(SERVICE_PUBLIC_DATA);
     // return public_key.exportKey('public');
-    return RSA_PUBLIC_DATA;
+    return SERVICE_PUBLIC_DATA;
   },
 };

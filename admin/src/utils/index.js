@@ -39,7 +39,7 @@ export const Decrypt = (data) => {
 /**
  * 前端加密
  * @param {*} message 需要加密的数据
- * @param {*} key 加密类型
+ * @param {*} type 加密类型
  * @returns
  */
 export const AESEncrypt = async (message, key = 'default') => {
@@ -54,7 +54,7 @@ export const AESEncrypt = async (message, key = 'default') => {
 };
 // 解密
 export const AESDecrypt = async (encrypt, key = 'default') => {
-  if (!encrypt) return;
+  if (!encrypt) return '';
   const decode = CryptoJS.AES.decrypt(encrypt, secretType[key], {
     iv: secret.IV,
     mode: CryptoJS.mode.CBC,

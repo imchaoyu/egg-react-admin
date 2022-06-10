@@ -45,3 +45,4 @@ run/
 typings/
 .nyc_output/
 **/config/config.settings.js
+**/pem
