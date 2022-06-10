@@ -5,7 +5,7 @@
  * create_date: 2022-05-16 11:51:45
  */
 
-const articles = () => {
+const Articles = () => {
   return (
     <div>
       <h1>articles</h1>
@@ -13,4 +13,4 @@ const articles = () => {
   );
 };
 
-export default articles;
+export default Articles;

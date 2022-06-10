@@ -11,7 +11,7 @@ export default [
       {
         name: 'login',
         path: '/login',
-        component: '@/pages/login/login',
+        component: '@/pages/Login/Login',
       },
       {
         component: './errorPages/404',
