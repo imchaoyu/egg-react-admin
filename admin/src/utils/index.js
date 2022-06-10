@@ -1,10 +1,10 @@
 import JSEncrypt from 'jsencrypt';
 import CryptoJS from 'crypto-js';
-import secret from '../../config/config.secret';
+import settings from '../../config/config.settings';
 
-const secretType = {
-  session: secret.SESSION_SECRET,
-  default: secret.DEFAULT_SECRET,
+const settingsType = {
+  session: settings.SESSION_KEY,
+  default: settings.DEFAULT_KEY,
 };
 
 /**
@@ -45,8 +45,8 @@ export const Decrypt = (data) => {
 export const AESEncrypt = async (message, key = 'default') => {
   if (!message) return '';
   const msg = JSON.stringify(message);
-  const encode = CryptoJS.AES.encrypt(msg, secretType[key], {
-    iv: secret.IV,
+  const encode = CryptoJS.AES.encrypt(msg, settingsType[key], {
+    iv: settings.IV,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
   }).toString();
@@ -55,8 +55,8 @@ export const AESEncrypt = async (message, key = 'default') => {
 // 解密
 export const AESDecrypt = async (encrypt, key = 'default') => {
   if (!encrypt) return '';
-  const decode = CryptoJS.AES.decrypt(encrypt, secretType[key], {
-    iv: secret.IV,
+  const decode = CryptoJS.AES.decrypt(encrypt, settingsType[key], {
+    iv: settings.IV,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
   }).toString(CryptoJS.enc.Utf8);
@@ -69,7 +69,7 @@ export const AESDecrypt = async (encrypt, key = 'default') => {
  * @returns md5
  */
 export const MD5 = async (str, key = 'default') => {
-  return CryptoJS.MD5(secretType[key] + str).toString();
+  return CryptoJS.MD5(settingsType[key] + str).toString();
 };
 /**
  * sessionStorage存储
