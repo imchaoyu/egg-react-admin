@@ -23,6 +23,8 @@
     "egg-bin": "^4.19.0",
     "egg-ci": "^1.19.0",
     "egg-mock": "^4.2.1",
+    "egg-sequelize-auto": "^0.1.1",
+    "eslint": "^7.32.0",
     "sequelize-cli": "^6.4.1"
   },
   "engines": {
@@ -38,7 +40,8 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "auto-model": "egg-sequelize-auto -d eradmin-dev -h localhost -u root -p 3306 -x 1qazxsw2 -e mysql"
   },
   "ci": {
     "version": "10"
