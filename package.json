@@ -34,7 +34,8 @@
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "commit-msg": "fabric verify-commit"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

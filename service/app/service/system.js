@@ -12,7 +12,7 @@ class SystemService extends Service {
     try {
       const res = await ctx.model.Keys.findOne({
         where: { id: 1 },
-        attributes: { exclude: ['client_private_key', 'service_private_key'] },
+        attributes: ['service_public_key', 'service_private_key'],
       });
       return res;
     } catch (err) {

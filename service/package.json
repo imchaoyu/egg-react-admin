@@ -41,7 +41,11 @@
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "auto-model": "egg-sequelize-auto -d eradmin-dev -h localhost -u root -p 3306 -x 1qazxsw2 -e mysql"
+    "auto-model": "egg-sequelize-auto -d eradmin-dev -h localhost -u root -p 3306 -x 1qazxsw2 -e mysql",
+    "?db:*":"使用sequelize初始化,创建表,数据库变更",
+    "db:config": "npx sequelize init:config && npx sequelize init:migrations",
+    "db:g": "npx sequelize migration:generate --name=init-users",
+    "db:p": "npx sequelize db:migrate"
   },
   "ci": {
     "version": "10"
