@@ -1,8 +1,8 @@
-# umi project
+# admin
+
+> 前端后台操作系统，基于 react+Umijs
 
 ## Getting Started
-
-Install dependencies,
 
 ```bash
 $ yarn
