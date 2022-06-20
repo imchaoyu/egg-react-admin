@@ -1,5 +1,7 @@
-import NodeRSA from 'node-rsa';
 import CryptoJS from 'crypto-js';
+// node-rsa库安装在项目最外层，使用require引入
+const NodeRSA = reuqire('node-rsa');
+
 import settings from '../../config/config.settings';
 
 const settingsType = {

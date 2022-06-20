@@ -11,7 +11,7 @@ class UserController extends Controller {
    */
   async login() {
     const { ctx } = this;
-    const { username, password } = await ctx.params();
+    const { username, password } = await ctx.getRes();
     console.log('password: ', password);
     console.log('username: ', username);
     try {

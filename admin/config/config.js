@@ -31,7 +31,7 @@ export default defineConfig({
   routes: routes,
   proxy: proxy[REACT_APP_ENV || 'dev'],
   fastRefresh: {},
-  // mfsu: {},
+  mfsu: {},
   webpack5: {},
   exportStatic: {},
 });
