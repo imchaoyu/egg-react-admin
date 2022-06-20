@@ -9,7 +9,7 @@ module.exports = (app) => {
   const apiRouter = router.namespace(`/api/${prefix}`);
   // 通用类api
   apiRouter.post('/', controller.home.index);
-  apiRouter.get('/key', controller.system.key);
+  apiRouter.post('/key', controller.system.key);
   apiRouter.post('/login', controller.user.login);
   apiRouter.post('/decodeDemo', controller.home.decodeDemo);
   // 后台api

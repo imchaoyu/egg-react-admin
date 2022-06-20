@@ -1,4 +1,5 @@
 const Settings = {
+  isEncode: false,
   navTheme: 'light',
   siderWidth: 180,
   // 拂晓蓝

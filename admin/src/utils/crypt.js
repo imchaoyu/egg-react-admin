@@ -29,14 +29,12 @@ export const Encrypt = async (data) => {
  * @param {String} data 需要解密的数据
  */
 export const Decrypt = async (data) => {
-  console.log('data: ', data);
   try {
     const public_key = await getSession('public_key');
     // 生成公钥对象
     const key = new NodeRSA(public_key, { encryptionScheme: 'pkcs1' });
     // 解密
     const deStr = key.decryptPublic(data, 'utf8');
-    console.log('deStr: ', deStr);
     return deStr && JSON.parse(deStr);
   } catch (err) {
     console.error('Decrypt err: ', err);

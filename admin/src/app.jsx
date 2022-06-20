@@ -3,10 +3,14 @@ import { PageLoading } from '@ant-design/pro-layout';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import RightContent from './components/RightContent';
 import { currentUser as queryCurrentUser } from './services/account';
-import { getSession } from '@/utils';
+import { getSession, Encrypt, Decrypt } from '@/utils';
+import Settings from '../config/defaultSettings';
 
+const { isEncode } = Settings;
+const prefix = '/api/v1';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
+const IgnoreUrl = ['/key', loginPath];
 
 export const initialStateConfig = {
   loading: <PageLoading />,
@@ -62,24 +66,27 @@ const errorConfigAdaptor = (resData, ctx) => {
  * @returns 请求信息
  */
 const authHeader = async (url, options) => {
-  console.log(
-    `%c${options.url}:  ${options.method}`,
-    'color:yellow',
-    '-----请求参数',
-    options.data,
-  );
+  options.method = 'POST';
+  isEncode &&
+    console.log(
+      `%c${options.url}:  ${options.method}`,
+      'color:yellow',
+      '-----请求参数',
+      options.data,
+    );
   // 传输数据加密
-  // const encode = options.data && (await AESEncrypt(options.data));
+  if (isEncode) {
+    // 不需要加密的api
+    const isIgnoreUrl = IgnoreUrl.includes(options.url);
+    options.data = isIgnoreUrl ? options?.data : await Encrypt(options?.data);
+  }
   const sessionid = (await getSession('openid', false)) || '';
   // 头信息修改
   const config = {
-    // data: encode || null,
     timeout: 5000,
     headers: {
-      Accept: 'text/html',
-      'Content-Type': 'text/html; charset=utf-8',
-      // Accept: '*/*',
-      // 'Content-Type': 'application/json;text/html;charset=UTF-8',
+      Accept: '*/*',
+      'Content-Type': 'text/html;charset=UTF-8',
       'x-sys-sessionid': sessionid,
     },
   };
@@ -89,13 +96,19 @@ const authHeader = async (url, options) => {
   };
 };
 // 响应后拦截
-const responseInterceptors = (response) => {
-  // response.headers.append('cy', 'yes yo');
-  return response;
+const responseInterceptors = async (response) => {
+  const path = response.url.split(prefix)[1];
+  const isIgnoreUrl = IgnoreUrl.includes(path);
+  if (!isEncode || isIgnoreUrl) return response;
+
+  const encode = await response.clone().text();
+  const res = await Decrypt(encode);
+  console.log(`%c${path}:  ${response.status}`, 'color:green', '-----返回数据', res);
+  return res;
 };
 // request请求拦截
 export const request = {
-  prefix: '/api/v1',
+  prefix,
   requestInterceptors: [authHeader],
   responseInterceptors: [responseInterceptors],
   errorConfig: {
