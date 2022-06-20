@@ -6,12 +6,16 @@ module.exports = {
    * @param {String} key 想取某个固定的值key,为空则返回所有
    * @returns 返回query或body内值
    */
-  params(key) {
+  async params(key) {
     const method = this.request.method;
     if (method === 'GET') {
-      return key ? this.query[key] : this.query;
+      const param = key ? this.query[key] : this.query;
+      // const res = await ctx.helper.decrypt(param);
+      return param;
     } else {
-      return key ? this.request.body[key] : this.request.body;
+      const param = key ? this.request.body[key] : this.request.body;
+      // const res = await ctx.helper.decrypt(param);
+      return param;
     }
   },
 };

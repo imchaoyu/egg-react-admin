@@ -11,32 +11,31 @@ class UserController extends Controller {
    */
   async login() {
     const { ctx } = this;
-    const { username, password } = ctx.params();
+    const { username, password } = await ctx.params();
     console.log('password: ', password);
     console.log('username: ', username);
-    // const user = await ctx.model.User.findOne({
-    //   where: {
-    //     username,
-    //   },
-    // });
-    const user = {
-      id: '001',
-      username: 'test',
-      sex: 'female',
-      age: 100,
-    };
-    const token = jwt.sign(
-      {
-        id: user.id,
-      },
-      SESSION_SECRET_KEY,
-      { expiresIn: EXPIRES },
-    );
-    const enToken = await ctx.helper.encrypt(token);
-    ctx.header['x-sys-sessionid'] = enToken;
-    // ctx.helper.redisSet('user', { id: user.id, name: user.username });
-    // return { user, enToken };
-    this.success({ data: { user, token: enToken }, msg: '登录成功' });
+    try {
+      const user = {
+        id: '001',
+        username,
+        sex: 'female',
+        age: 100,
+      };
+      const token = jwt.sign(
+        {
+          id: user.id,
+        },
+        SESSION_SECRET_KEY,
+        { expiresIn: EXPIRES },
+      );
+      const enToken = await ctx.helper.encryptToken(token);
+      ctx.header['x-sys-sessionid'] = enToken;
+      // ctx.helper.redisSet('user', { id: user.id, name: user.username });
+      // return { user, enToken };
+      this.success({ data: { user, token: enToken }, msg: '登录成功' });
+    } catch (err) {
+      ctx.throw(500, err);
+    }
   }
 }
 

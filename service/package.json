@@ -14,8 +14,8 @@
     "egg-scripts": "^2.17.0",
     "egg-sequelize": "^6.0.0",
     "egg-validate": "^2.0.2",
-    "mysql2": "^2.3.3",
-    "node-rsa": "^1.1.1"
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "autod": "^3.1.2",
@@ -42,7 +42,7 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "auto-model": "egg-sequelize-auto -d eradmin-dev -h localhost -u root -p 3306 -x 1qazxsw2 -e mysql",
-    "?db:*":"使用sequelize初始化,创建表,数据库变更",
+    "?db:*": "使用sequelize初始化,创建表,数据库变更",
     "db:config": "npx sequelize init:config && npx sequelize init:migrations",
     "db:g": "npx sequelize migration:generate --name=init-users",
     "db:p": "npx sequelize db:migrate"

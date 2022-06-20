@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, message } from 'antd';
 import { getPublicKey, demo, login } from '@/services/login';
-import { Encrypt, setSession } from '@/utils';
+import { Decrypt, setSession, getSession } from '@/utils';
 
 const Login = () => {
   const [publicKey, setPublicKey] = useState('');
   const [encode, setEncode] = useState('');
+
+  useEffect(() => {
+    getSe();
+  }, [publicKey]);
+  const getSe = async () => {
+    const public_key = await getSession('public_key');
+    if (public_key) {
+      setPublicKey(public_key);
+    }
+  };
   // 登录
   const onLogin = async () => {
     const params = {
@@ -29,15 +39,10 @@ const Login = () => {
   };
   const onDecode = async () => {
     try {
-      const encrypted = await Encrypt({ name: 'chaoyu', age: 100 });
-      console.log('encrypted: ', encrypted);
-      if (!encrypted) {
-        message.error('数据加密出错');
-        return false;
-      }
-      setEncode("{ name: 'chaoyu', age: 100 }");
-      const res = await demo({ data: { name: 'chaoyu', age: 100 } });
-      console.log('res: ', res);
+      const data = { data: { name: 'chaoyu', age: 100 } };
+      const res = await demo(data);
+      const Dres = await Decrypt(res.data);
+      setEncode(JSON.stringify(Dres));
     } catch (err) {
       console.log(err);
     }

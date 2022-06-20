@@ -1,4 +1,4 @@
-import JSEncrypt from 'jsencrypt';
+import NodeRSA from 'node-rsa';
 import CryptoJS from 'crypto-js';
 import settings from '../../config/config.settings';
 
@@ -14,14 +14,12 @@ const settingsType = {
 export const Encrypt = async (data) => {
   try {
     const public_key = await getSession('public_key');
-    if (!public_key) {
-      throw new Error('public key is not find!');
-    }
-    const dataStr = JSON.stringify(data);
-    const encrypt = new JSEncrypt();
-    encrypt.setPublicKey(public_key);
-    const encrypted = encrypt.encrypt(dataStr);
-    return encrypted;
+    // 生成公钥对象
+    const key = new NodeRSA(public_key, { encryptionScheme: 'pkcs1' });
+    // 格式化原始数据
+    const str = JSON.stringify(data);
+    // 返回加密内容
+    return key.encrypt(str, 'base64');
   } catch (err) {
     console.error('Encrypt', err);
   }
@@ -30,11 +28,19 @@ export const Encrypt = async (data) => {
  * 数据解密 from api
  * @param {String} data 需要解密的数据
  */
-export const Decrypt = (data) => {
-  let decrypt = new JSEncrypt(); // 新建JSEncrypt对象
-  decrypt.setPublicKey(publicKey); // 设置公钥
-  // 对需要加密的数据进行解密
-  return decrypt.decrypt(data);
+export const Decrypt = async (data) => {
+  console.log('data: ', data);
+  try {
+    const public_key = await getSession('public_key');
+    // 生成公钥对象
+    const key = new NodeRSA(public_key, { encryptionScheme: 'pkcs1' });
+    // 解密
+    const deStr = key.decryptPublic(data, 'utf8');
+    console.log('deStr: ', deStr);
+    return deStr && JSON.parse(deStr);
+  } catch (err) {
+    console.error('Decrypt err: ', err);
+  }
 };
 /**
  * 前端加密

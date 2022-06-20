@@ -34,11 +34,10 @@ class HomeController extends Controller {
   async decodeDemo() {
     const { ctx } = this;
     try {
-      const p = ctx.params();
-      const res = await ctx.helper.decrypt(p.data);
+      const p = await ctx.params();
+      const res = await ctx.helper.encrypt(p);
       this.success({ data: res });
     } catch (err) {
-      console.log('err========', err);
       ctx.throw(500, err);
     }
   }

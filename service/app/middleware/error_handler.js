@@ -24,7 +24,7 @@ module.exports = () => {
         errorCode,
         errorMessage,
       };
-      ctx.status = 200;
+      ctx.status = errorCode;
     }
   };
 };

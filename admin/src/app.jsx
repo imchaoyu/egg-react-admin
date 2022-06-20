@@ -76,10 +76,10 @@ const authHeader = async (url, options) => {
     // data: encode || null,
     timeout: 5000,
     headers: {
-      // Accept: 'text/html',
-      // 'Content-Type': 'text/html; charset=utf-8',
-      Accept: '*/*',
-      'Content-Type': 'application/json;charset=UTF-8',
+      Accept: 'text/html',
+      'Content-Type': 'text/html; charset=utf-8',
+      // Accept: '*/*',
+      // 'Content-Type': 'application/json;text/html;charset=UTF-8',
       'x-sys-sessionid': sessionid,
     },
   };
