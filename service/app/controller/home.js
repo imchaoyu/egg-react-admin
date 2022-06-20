@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('./BaseController');
+const { Controller } = require('egg');
 
 class HomeController extends Controller {
   async index() {
@@ -14,10 +14,9 @@ class HomeController extends Controller {
       msg: '成功',
     };
     const en = await ctx.helper.encrypt(data);
-    console.log('en: ', en);
     const de = await ctx.helper.decrypt(en);
     console.log('de: ', de);
-    this.success();
+    ctx.SUCCESS();
   }
   /**
    * 获取公钥
@@ -26,17 +25,17 @@ class HomeController extends Controller {
     const { ctx } = this;
     try {
       const str = await ctx.helper.getPublicKey();
-      this.success({ data: str });
+      ctx.SUCCESS({ data: str });
     } catch (err) {
-      this.fail(err);
+      ctx.FAIL(err);
     }
   }
   async decodeDemo() {
     const { ctx } = this;
     try {
-      const p = await ctx.params();
-      const res = await ctx.helper.encrypt(p);
-      this.success({ data: res });
+      const p = await ctx.getRes();
+      // const res = await ctx.helper.encrypt(p);
+      ctx.SUCCESS({ data: p });
     } catch (err) {
       ctx.throw(500, err);
     }

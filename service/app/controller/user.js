@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('./BaseController');
+const { Controller } = require('egg');
 const jwt = require('jsonwebtoken');
 const { SESSION_SECRET_KEY, EXPIRES } = require('../../config/config.settings');
 
@@ -32,7 +32,7 @@ class UserController extends Controller {
       ctx.header['x-sys-sessionid'] = enToken;
       // ctx.helper.redisSet('user', { id: user.id, name: user.username });
       // return { user, enToken };
-      this.success({ data: { user, token: enToken }, msg: '登录成功' });
+      ctx.SUCCESS({ data: { user, token: enToken }, msg: '登录成功' });
     } catch (err) {
       ctx.throw(500, err);
     }
