@@ -20,9 +20,18 @@ module.exports = (appInfo) => {
     },
   };
   // 中间件
-  config.middleware = ['notFound', 'errorHandler', 'auth'];
+  config.middleware = ['notFound', 'errorHandler', 'auth', 'secretAPI'];
   // auth过滤
   config.auth = {
+    enable: true,
+    ignore: [
+      '/api/v1/key',
+      '/api/v1/login',
+      '/api/v1/admin/user/logout',
+      '/api/v1/admin/user/captcha',
+    ],
+  };
+  config.secretAPI = {
     enable: true,
     ignore: [
       '/api/v1/key',
@@ -56,7 +65,6 @@ module.exports = (appInfo) => {
   // 错误配置
   config.onerror = {
     async all(err, ctx) {
-      console.log('err: ', err);
       // 在此处定义针对所有响应类型的错误处理方法
       // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
       ctx.body = { errorCode: 10001, errorMessage: err?.message ?? '系统出现错误！' };
@@ -70,7 +78,7 @@ module.exports = (appInfo) => {
   };
   // add your user config here
   const userConfig = {
-    // myAppName: 'egg',
+    isEncode: false, // 数据传输是否加密
   };
 
   return {
