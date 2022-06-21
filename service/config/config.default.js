@@ -1,5 +1,6 @@
 'use strict';
 
+const swaggerCfg = require('./config.swagger');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -25,6 +26,7 @@ module.exports = (appInfo) => {
   config.auth = {
     enable: true,
     ignore: [
+      '/',
       '/api/v1/key',
       '/api/v1/login',
       '/api/v1/admin/user/logout',
@@ -35,7 +37,7 @@ module.exports = (appInfo) => {
     enable: true,
     ignore: [
       '/api/v1/key',
-      '/api/v1/login',
+      '/api/v1/admin/login',
       '/api/v1/admin/user/logout',
       '/api/v1/admin/user/captcha',
     ],
@@ -71,6 +73,8 @@ module.exports = (appInfo) => {
       ctx.status = 200;
     },
   };
+  // swagger配置
+  config.swaggerdoc = swaggerCfg;
   // 配置参数校验器，基于parameter
   config.validate = {
     convert: true, // 对参数可以使用convertType规则进行类型转换
@@ -79,6 +83,8 @@ module.exports = (appInfo) => {
   // add your user config here
   const userConfig = {
     isEncode: false, // 数据传输是否加密
+    EXPIRES: 1000 * 3600 * 24, // session 过期时间
+    SESSION_SECRET_KEY: 'woShIcHAoyu*&a,_3_2%=1', // jwt session密钥key
   };
 
   return {

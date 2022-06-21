@@ -7,16 +7,16 @@ module.exports = {
    * @returns 返回query或body内值
    */
   async params(key) {
-    const method = this.request.method;
+    const method = this.request.method.toLocaleUpperCase();
+    const { isEncode } = this.app.config;
     if (method === 'GET') {
-      const param = key ? this.query[key] : this.query;
-      // const res = await ctx.helper.decrypt(param);
-      return param;
+      const enStr = key ? this.query[key] : this.query;
+      const data = isEncode && enStr ? await this.helper.decrypt(enStr) : enStr;
+      return data;
     } else {
-      console.log('this.request.body: ', this.request.body);
-      const param = key ? this.request.body[key] : this.request.body;
-      // const res = await ctx.helper.decrypt(param);
-      return param;
+      const enStr = key ? this.request.body[key] : this.request.body;
+      const data = isEncode && enStr ? await this.helper.decrypt(enStr) : enStr;
+      return data;
     }
   },
   /**

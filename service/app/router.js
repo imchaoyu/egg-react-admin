@@ -16,4 +16,6 @@ module.exports = (app) => {
   require('./routes/admin')(app, prefix);
   // web端api
   require('./routes/web')(app, prefix);
+
+  router.redirect('/', '/swagger-ui.html', 302);
 };
