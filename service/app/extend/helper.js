@@ -1,5 +1,5 @@
 'use strict';
-
+const crypto = require('crypto');
 const NodeRSA = require('node-rsa');
 
 module.exports = {
@@ -46,5 +46,25 @@ module.exports = {
     const str = JSON.stringify(data);
     // 返回加密内容
     return key.encryptPrivate(str, 'base64');
+  },
+
+  /**
+   * 密码加盐
+   * @param {String} password 原始密码
+   * @param {*} salt 盐，默认crypto生成随机
+   * @returns {salt, pwdWithSalt}
+   */
+  async saltPassword(
+    password,
+    salt = crypto.createHash('md5').update(Math.random().toString()).digest('hex'),
+  ) {
+    const password_finally = crypto
+      .createHash('md5')
+      .update(password + ':' + salt)
+      .digest('hex');
+    return {
+      salt,
+      password: password_finally,
+    };
   },
 };
