@@ -14,11 +14,12 @@ class UserController extends Controller {
    * @request body userLogin
    */
   async login() {
-    const { ctx, app } = this;
-    const { SESSION_SECRET_KEY, EXPIRES } = app.config;
+    // ctx, app, config, service, logger
+    const { ctx, config, service } = this;
+    const { SESSION_SECRET_KEY, EXPIRES } = config;
     const { username, password } = await ctx.params();
     ctx.validate(ctx.rule.userLogin);
-    const userInfo = await ctx.service.user.login({ username, password });
+    const userInfo = await service.user.login({ username, password });
     if (!userInfo) {
       ctx.throw(404, '用户名或密码错误！');
     }
