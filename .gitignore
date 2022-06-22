@@ -40,9 +40,7 @@ logs/
 coverage/
 .idea/
 run/
-*.sw*
 *.un~
 typings/
 .nyc_output/
-**/config/config.settings.js
 **/pem
