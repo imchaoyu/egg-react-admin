@@ -24,6 +24,7 @@ module.exports = () => {
       const res = {
         errorCode,
         errorMessage,
+        showType: 3,
       };
       ctx.body = isEncode ? await ctx.helper.encrypt(res) : res;
       ctx.status = errorCode;

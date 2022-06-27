@@ -5,10 +5,20 @@ import proxy from './proxy';
 const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
+  model: {},
+  antd: {
+    configProvider: {},
+    dark: true,
+    compact: true,
+    import: true,
+    style: 'less',
+  },
+  request: {},
+  initialState: {},
   hash: true,
-  antd: {},
-  dva: {
-    hmr: true,
+  dva: {},
+  mock: {
+    include: ['src/pages/**/_mock.js'],
   },
   layout: {
     locale: false,
@@ -19,19 +29,11 @@ export default defineConfig({
     antd: false,
     baseNavigator: false,
   },
-  dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
-  },
-  targets: {
-    ie: 11,
-  },
-  nodeModulesTransform: {
-    type: 'none',
-  },
+  // externals: { react: 'React' },
+  // headScripts: ['https://unpkg.com/react@17.0.0/umd/react.production.min.js'],
   routes: routes,
   proxy: proxy[REACT_APP_ENV || 'dev'],
-  fastRefresh: {},
+  fastRefresh: true,
   mfsu: {},
-  webpack5: {},
-  exportStatic: {},
+  npmClient: 'yarn',
 });

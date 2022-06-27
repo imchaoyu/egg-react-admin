@@ -34,13 +34,8 @@ module.exports = (appInfo) => {
     ],
   };
   config.secretAPI = {
-    enable: true,
-    ignore: [
-      '/api/v1/key',
-      '/api/v1/admin/login',
-      '/api/v1/admin/user/logout',
-      '/api/v1/admin/user/captcha',
-    ],
+    enable: false,
+    ignore: ['/api/v1/key'],
   };
   // Session的默认配置
   config.session = {
@@ -82,7 +77,7 @@ module.exports = (appInfo) => {
   };
   // add your user config here
   const userConfig = {
-    isEncode: false, // 数据传输是否加密
+    isEncode: true, // 数据传输是否加密
     EXPIRES: 1000 * 3600 * 24, // session 过期时间
     SESSION_SECRET_KEY: 'woShIcHAoyu*&a,_3_2%=1', // jwt session密钥key
   };

@@ -35,9 +35,9 @@ module.exports = {
    * 处理返回数据格式
    * status统一为200，通过errCode作为真实状态码处理，errMessage进行信息提示，data返回成功后的数据
    */
-  async SUCCESS({ data = null, msg = '操作成功', showType = 0 } = {}) {
+  async SUCCESS({ data = null, msg = '操作成功', showType = 3 } = {}) {
     const res = {
-      errorCode: 200,
+      errorCode: 2000,
       errorMessage: msg,
       showType,
       data,
@@ -45,7 +45,7 @@ module.exports = {
     this.body = res;
     this.status = 200;
   },
-  async FAIL(err, showType = 4) {
+  async FAIL(err, showType = 3) {
     // 验证字段失败 返回422
     const errText = err.status !== 422 ? err.message : err.errors[0].message;
     if (err) {
