@@ -12,7 +12,7 @@
     "dev:service": "cd ./service && yarn dev",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./admin/src  --format=pretty ./service/app && npm run lint:style",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./admin/src --format=pretty ./service/app",
     "lint:prettier": "prettier -c --write \"admin/src/**/*\" --write \"service/app/**/*\" --end-of-line auto",
@@ -30,11 +30,14 @@
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "prettier": "^2.7.0",
-    "stylelint": "13.0.0",
+    "stylelint": "14.9.0",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged",
     "commit-msg": "fabric verify-commit"
   },
   "lint-staged": {
