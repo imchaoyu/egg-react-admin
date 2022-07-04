@@ -24,6 +24,9 @@ describe('test/app/extend/Context.test.js', () => {
   describe('params', () => {
     it('should work', async () => {
       // const ctx = app.mockContext();
+      // await ctx.service.system.keys();
+      // // ctx.params
+      // assert(ctx.params);
     });
   });
 });

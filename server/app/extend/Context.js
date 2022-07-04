@@ -1,33 +1,34 @@
 'use strict';
+const RESPARAMS = Symbol('Context#resparams');
 
 module.exports = {
   /**
-   * 根据请求方式获取不同的参数
-   * @param {String} key 想取某个固定的值key,为空则返回所有
-   * @return {Object|String} 返回query或body内值
+   * 根据请求方式获取不同的参数,只考虑get和post请求
    */
-  async params(key) {
-    const method = this.request.method.toLocaleUpperCase();
-    const { isEncode } = this.app.config;
-    if (method === 'GET') {
-      const enStr = key ? this.query[key] : this.query;
-      const data = isEncode && enStr ? await this.helper.decrypt(enStr) : enStr;
-      return data;
+  get resparams() {
+    if (!this[RESPARAMS]) {
+      const method = this.request.method.toLocaleUpperCase();
+      const { isEncode } = this.app.config;
+      if (method === 'GET') {
+        const { query } = this;
+        if (isEncode && query) {
+          const deQuery = this.helper.decrypt(query);
+          this[RESPARAMS] = deQuery;
+        } else {
+          this[RESPARAMS] = query;
+        }
+      }
+      if (method === 'POST') {
+        const body = this.request.body;
+        if (isEncode && body) {
+          const deBody = this.helper.decrypt(body);
+          this[RESPARAMS] = deBody;
+        } else {
+          this[RESPARAMS] = body;
+        }
+      }
     }
-    const enStr = key ? this.request.body[key] : this.request.body;
-    const data = isEncode && enStr ? await this.helper.decrypt(enStr) : enStr;
-    return data;
-  },
-  /**
-   * 统一使用POST请求，获取body内容
-   * @param {String} key 需要单独获取的字段
-   * @return  {Object|String} 请求体数据
-   */
-  async getRes(key) {
-    const { isEncode } = this.app.config;
-    const enStr = key ? this.request.body[key] : this.request.body;
-    const data = isEncode && enStr ? await this.helper.decrypt(enStr) : enStr;
-    return data;
+    return this[RESPARAMS];
   },
   /**
    * SUCCESS
