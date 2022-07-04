@@ -54,12 +54,13 @@ module.exports = {
    * 处理请求失败的返回数据格式
    * status统一为200，通过errCode作为真实状态码处理，errMessage进行信息提示
    * @param {Object} root0 整体参数
+   * @param {String|Number} root0.code 错误代码
    * @param {String} root0.msg 提示信息
    * @param {Number} root0.showType 类型
    */
-  async FAIL({ msg = '操作失败', showType = 3 } = {}) {
+  async FAIL({ code = 400, msg = '操作失败', showType = 3 } = {}) {
     const res = {
-      errorCode: 400,
+      errorCode: code,
       errorMessage: msg,
       showType,
     };

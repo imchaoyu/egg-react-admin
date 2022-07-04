@@ -74,6 +74,21 @@ const body = {
       required: false,
       description: '最后登录时间',
     },
+    created_at: {
+      type: 'string',
+      required: false,
+      description: '创建时间',
+    },
+    updated_at: {
+      type: 'string',
+      required: false,
+      description: '更新时间',
+    },
+    deleted_at: {
+      type: 'string',
+      required: false,
+      description: '删除时间',
+    },
   },
 };
 
@@ -81,6 +96,9 @@ module.exports = {
   ...body,
   userLogin: {
     ...body.userId,
+    ...body.userBodyReq,
+  },
+  userCreate: {
     ...body.userBodyReq,
   },
 };

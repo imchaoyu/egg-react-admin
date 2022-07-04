@@ -26,6 +26,7 @@
     "db:p": "npx sequelize db:migrate"
   },
   "dependencies": {
+    "dayjs": "^1.11.3",
     "egg": "^2",
     "egg-cors": "^2.2.3",
     "egg-mysql": "^3.1.1",

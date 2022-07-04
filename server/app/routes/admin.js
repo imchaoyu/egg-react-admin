@@ -8,4 +8,5 @@ module.exports = (app, version) => {
   // 前缀设置 ex: /api/v1/admin/example
   const apiWebAdminRouter = router.namespace(`/api/${version}/admin`);
   apiWebAdminRouter.post('/login', controller.user.login);
+  apiWebAdminRouter.post('/user/create', controller.user.create);
 };
