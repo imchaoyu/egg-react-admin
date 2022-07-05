@@ -1,34 +1,34 @@
 'use strict';
-const RESPARAMS = Symbol('Context#resparams');
+const REQPARAMS = Symbol('Context#reqParams');
 
 module.exports = {
   /**
    * 根据请求方式获取不同的参数,只考虑get和post请求
    */
-  get resparams() {
-    if (!this[RESPARAMS]) {
+  get reqParams() {
+    if (!this[REQPARAMS]) {
       const method = this.request.method.toLocaleUpperCase();
       const { isEncode } = this.app.config;
       if (method === 'GET') {
         const { query } = this;
         if (isEncode && query) {
           const deQuery = this.helper.decrypt(query);
-          this[RESPARAMS] = deQuery;
+          this[REQPARAMS] = deQuery;
         } else {
-          this[RESPARAMS] = query;
+          this[REQPARAMS] = query;
         }
       }
       if (method === 'POST') {
         const body = this.request.body;
         if (isEncode && body) {
           const deBody = this.helper.decrypt(body);
-          this[RESPARAMS] = deBody;
+          this[REQPARAMS] = deBody;
         } else {
-          this[RESPARAMS] = body;
+          this[REQPARAMS] = body;
         }
       }
     }
-    return this[RESPARAMS];
+    return this[REQPARAMS];
   },
   /**
    * SUCCESS

@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 const dayjs = require('dayjs');
+const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
 class UserService extends Service {
@@ -10,7 +11,6 @@ class UserService extends Service {
    * @param {Object} payload 参数
    */
   async create(payload) {
-    console.log('payload: ', payload);
     const { ctx } = this;
     const { email, username } = payload;
     const current_time = dayjs().format('YYYY-MM-DD hh:mm:ss');
@@ -43,9 +43,31 @@ class UserService extends Service {
   }
   /**
    * 用户登录
+   * @param {Object} payload 参数
    */
-  async login() {
-    return {};
+  async login(payload) {
+    const { ctx } = this;
+    const user = await ctx.model.Users.findOne({
+      where: { username: payload.username },
+    });
+    if (!user) {
+      return {
+        code: 40003,
+        msg: '用户名或密码错误',
+      };
+    }
+    payload = Object.assign(
+      payload,
+      await ctx.helper.saltPassword(payload.password, user.password.substr(32)),
+    );
+    payload.password += payload.salt;
+    if (payload.password !== user.password) {
+      return {
+        code: 40003,
+        msg: '用户名或密码错误',
+      };
+    }
+    return await this.loginDeal(ctx, user);
   }
   /**
    * 是否存在此用户字段
@@ -64,6 +86,28 @@ class UserService extends Service {
       where,
       attributes: { exclude: ['password', 'deleted_at'] },
     });
+  }
+  async loginDeal(ctx, user) {
+    if (user.state !== 0) {
+      return {
+        code: 40005,
+        message: '账号已停用!',
+      };
+    }
+    user.update({
+      last_login: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    });
+    const { SESSION_SECRET_KEY, EXPIRES } = ctx.app.config;
+    const token = jwt.sign(
+      {
+        id: user.id,
+      },
+      SESSION_SECRET_KEY,
+      { expiresIn: EXPIRES },
+    );
+    const enToken = await ctx.helper.encrypt(token);
+    ctx.header['x-sys-openid'] = enToken;
+    return { user, enToken };
   }
 }
 

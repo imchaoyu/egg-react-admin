@@ -70,7 +70,7 @@ const body = {
       description: '城市',
     },
     last_login: {
-      type: 'string',
+      type: 'date',
       required: false,
       description: '最后登录时间',
     },
@@ -80,12 +80,12 @@ const body = {
       description: '创建时间',
     },
     updated_at: {
-      type: 'string',
+      type: 'date',
       required: false,
       description: '更新时间',
     },
     deleted_at: {
-      type: 'string',
+      type: 'date',
       required: false,
       description: '删除时间',
     },
@@ -95,8 +95,8 @@ const body = {
 module.exports = {
   ...body,
   userLogin: {
-    ...body.userId,
-    ...body.userBodyReq,
+    username: body.userBodyReq.username,
+    password: body.userBodyReq.password,
   },
   userCreate: {
     ...body.userBodyReq,
