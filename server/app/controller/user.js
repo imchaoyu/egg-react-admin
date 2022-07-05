@@ -25,7 +25,7 @@ class UserController extends Controller {
   /**
    * @summary 用户登录
    * @description 用户登录
-   * @router post /api/v0/amdin/user/login
+   * @router post /api/v0/admin/user/login
    * @request body userLogin
    */
   async login() {

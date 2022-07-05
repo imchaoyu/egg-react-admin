@@ -91,7 +91,7 @@ class UserService extends Service {
     if (user.state !== 0) {
       return {
         code: 40005,
-        message: '账号已停用!',
+        msg: '账号已停用!',
       };
     }
     user.update({
@@ -105,8 +105,8 @@ class UserService extends Service {
       SESSION_SECRET_KEY,
       { expiresIn: EXPIRES },
     );
-    const enToken = await ctx.helper.encrypt(token);
-    ctx.header['x-sys-openid'] = enToken;
+    const enToken = await ctx.helper.encryptToken(token);
+    ctx.header['x-sys-sessionid'] = enToken;
     return { user, enToken };
   }
 }
