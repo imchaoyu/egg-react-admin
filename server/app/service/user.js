@@ -13,6 +13,12 @@ class UserService extends Service {
   async create(payload) {
     const { ctx } = this;
     const { email, username } = payload;
+    if (username.indexOf('admin') > -1) {
+      return {
+        code: 40000,
+        msg: '用户名非法！',
+      };
+    }
     const current_time = dayjs().format('YYYY-MM-DD hh:mm:ss');
     const resExistsUsername = await this.existsUserUniqueFields({ username });
     if (resExistsUsername) {
