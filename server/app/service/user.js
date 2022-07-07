@@ -1,7 +1,6 @@
 'use strict';
 
 const Service = require('egg').Service;
-const dayjs = require('dayjs');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
@@ -11,7 +10,7 @@ class UserService extends Service {
    * @param {Object} payload 参数
    */
   async create(payload) {
-    const { ctx } = this;
+    const { ctx, app } = this;
     const { email, username } = payload;
     if (username.indexOf('admin') > -1) {
       return {
@@ -19,7 +18,7 @@ class UserService extends Service {
         msg: '用户名非法！',
       };
     }
-    const current_time = dayjs().format('YYYY-MM-DD hh:mm:ss');
+    const current_time = app.timenow;
     const resExistsUsername = await this.existsUserUniqueFields({ username });
     if (resExistsUsername) {
       return {
@@ -101,7 +100,7 @@ class UserService extends Service {
       };
     }
     user.update({
-      last_login: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      last_login: this.app.timenow,
     });
     const { SESSION_SECRET_KEY, EXPIRES } = ctx.app.config;
     const currentuserInfo = { id: user.id, username: user.username };
