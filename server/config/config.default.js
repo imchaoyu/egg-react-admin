@@ -24,7 +24,7 @@ module.exports = appInfo => {
     // },
   };
   // 中间件
-  config.middleware = ['notFound', 'errorHandler', 'auth'];
+  config.middleware = ['logHandler', 'notFound', 'errorHandler', 'auth'];
   // auth过滤
   config.auth = {
     enable: true,
