@@ -3,7 +3,7 @@
 module.exports = app => {
   const { INTEGER, TEXT, STRING, DATE } = app.Sequelize;
 
-  const OperationLogs = app.model.define(
+  const Logs = app.model.define(
     'operation_logs',
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -32,7 +32,7 @@ module.exports = app => {
     },
   );
 
-  OperationLogs.associate = function () {};
+  Logs.associate = function () {};
 
-  return OperationLogs;
+  return Logs;
 };

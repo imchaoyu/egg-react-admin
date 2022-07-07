@@ -9,10 +9,8 @@ class LogService extends Service {
    * @returns 成功失败
    */
   async create(payload) {
-    console.log('payload: ', payload);
     const { ctx } = this;
-    const res = await ctx.model.OperationLogs.create(payload);
-    console.log('res: ', res);
+    await ctx.model.Logs.create(payload);
   }
 }
 

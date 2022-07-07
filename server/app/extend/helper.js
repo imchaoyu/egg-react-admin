@@ -70,4 +70,37 @@ module.exports = {
       password: password_finally,
     };
   },
+  /**
+   * redis存储值
+   * @param {String} key redis key值
+   * @param {Any} value redis value
+   * @param {Number} seconds redis有效期
+   */
+  async redisSet(key, value, seconds) {
+    const { redis, config } = this.app;
+    value = JSON.stringify(value);
+    // 设置有效时间
+    await redis.set(key, value, 'EX', seconds || config.redisMaxAge);
+  },
+  /**
+   * 获取redis
+   * @param {String} key 获取的redis
+   * @returns redis存储的数据
+   */
+  async redisGet(key) {
+    const { redis } = this.app;
+    let data = await redis.get(key);
+    if (!data) return;
+    data = JSON.parse(data);
+    return data;
+  },
+  /**
+   * 清空redis
+   * @returns novid
+   */
+  async redisRemove() {
+    const { redis } = this.app;
+    redis.flushall();
+    return;
+  },
 };

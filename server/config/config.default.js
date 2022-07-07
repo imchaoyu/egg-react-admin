@@ -39,7 +39,7 @@ module.exports = appInfo => {
   };
   // Session的默认配置
   config.session = {
-    key: 'openid',
+    key: 'x-sys-sessionid',
     maxAge: 1000 * 3600 * 2, // 2h
     httpOnly: true,
     encrypt: true,
@@ -75,11 +75,21 @@ module.exports = appInfo => {
     convert: true, // 对参数可以使用convertType规则进行类型转换
     // validateRoot: false,   // 限制被验证值必须是一个对象。
   };
+  // redis配置
+  config.redis = {
+    client: {
+      port: 6379, // Redis port
+      host: '127.0.0.1', // Redis host
+      password: '',
+      db: 0,
+    },
+  };
   // 自定义配置
   const userConfig = {
     isEncode: false, // 数据传输是否加密
     EXPIRES: 1000 * 3600 * 24, // session 过期时间
     SESSION_SECRET_KEY: 'woShIcHAoyu*&a,_3_2%=1', // jwt session密钥key
+    redisMaxAge: 1000 * 3600 * 24, // redis有效期
   };
 
   return {

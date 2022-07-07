@@ -104,15 +104,11 @@ class UserService extends Service {
       last_login: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     });
     const { SESSION_SECRET_KEY, EXPIRES } = ctx.app.config;
-    const token = jwt.sign(
-      {
-        id: user.id,
-      },
-      SESSION_SECRET_KEY,
-      { expiresIn: EXPIRES },
-    );
+    const currentuserInfo = { id: user.id, username: user.username };
+    const token = jwt.sign(currentuserInfo, SESSION_SECRET_KEY, { expiresIn: EXPIRES });
     const enToken = await ctx.helper.encryptToken(token);
     ctx.header['x-sys-sessionid'] = enToken;
+    ctx.helper.redisSet('userInfo', currentuserInfo);
     return { user, enToken };
   }
 }

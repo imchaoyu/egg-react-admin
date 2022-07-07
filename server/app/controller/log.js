@@ -16,7 +16,7 @@ class LogController extends Controller {
   async create() {
     const { ctx } = this;
     ctx.validate(ctx.rule.operation_logBodyReq, ctx.reqParams);
-    await ctx.service.operation_logs.create(ctx.reqParams);
+    await ctx.service.log.create(ctx.reqParams);
     ctx.SUCCESS();
   }
 }
