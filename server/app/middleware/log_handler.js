@@ -1,7 +1,5 @@
 'use strict';
 
-const dayjs = require('dayjs');
-
 module.exports = (option, app) => {
   return async function (ctx, next) {
     try {
@@ -21,7 +19,6 @@ module.exports = (option, app) => {
           ip: ctx.request.ip,
           status: ctx.response.status,
           params: JSON.stringify(ctx.request.body),
-          created_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         };
         ctx.service.log.create(payload);
       }
