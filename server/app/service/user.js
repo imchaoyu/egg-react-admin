@@ -92,6 +92,12 @@ class UserService extends Service {
       attributes: { exclude: ['password', 'deleted_at'] },
     });
   }
+  /**
+   * 登录数据处理
+   * @param {Object} ctx Egg ctx
+   * @param {Object} user 用户信息
+   * @returns user token
+   */
   async loginDeal(ctx, user) {
     if (user.state !== 0) {
       return {

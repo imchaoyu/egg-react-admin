@@ -2,32 +2,22 @@
 
 a server project by eggjs
 
-## QuickStart
 
-<!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
-
-### Development
+## 启动项目
 
 ```bash
 $ npm i
 $ npm run dev
-$ open http://localhost:7001/
 ```
 
-### Deploy
+## 任务列表
 
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+- [x] 路由统一前缀
+- [x] dayjs统一当前时间
+- [x] 统一返回信息和请求数据
+- [x] RSA非对称加解密
+- [x] sequelize ORM
+- [x] swagger及字段验证合一
+- [x] token验证
+- [x] 创建用户及用户登录
+- [ ] 权限
