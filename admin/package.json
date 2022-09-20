@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "author": "chaoyu <chaoyumail@126.com>",
+  "scripts": {
+    "build": "max build",
+    "dev": "max dev",
+    "format": "prettier --cache --write .",
+    "postinstall": "max setup",
+    "lint": "umi lint",
+    "prepare": "husky install",
+    "setup": "max setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@ant-design/pro-components": "^1.1.15",
+    "@umijs/max": "^4.0.12",
+    "antd": "^4.22.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "cy-style": "^0.2.5",
+    "eslint": "8.21.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "^4.1.2"
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "gitHooks": {
+    "commit-msg": "cy-style verify-commit"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
+}
